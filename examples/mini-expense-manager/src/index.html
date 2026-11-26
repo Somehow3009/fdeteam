@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mini Expense Manager</title>
+    <style>
+      body { max-width: 900px; margin: 3rem auto; padding: 0 1rem; font: 16px system-ui, sans-serif; color: #172033; }
+      h1 { margin-bottom: .3rem; } .filters, form { display: flex; flex-wrap: wrap; gap: .8rem; align-items: end; margin: 1.5rem 0; }
+      label { display: grid; gap: .3rem; } input, button { padding: .55rem .7rem; font: inherit; } button { cursor: pointer; }
+      table { width: 100%; border-collapse: collapse; } th, td { padding: .65rem; border-bottom: 1px solid #d7deea; text-align: left; }
+      [role=alert] { color: #a01824; min-height: 1.3em; }
+    </style>
+    <script type="module" src="/app.mjs"></script>
+  </head>
+  <body>
+    <h1>Mini Expense Manager</h1>
+    <p>Filter expenses by date and export the matching rows.</p>
+    <form id="add-expense">
+      <label>Description <input name="description" required></label>
+      <label>Amount <input name="amount" type="number" min="0.01" step="0.01" required></label>
+      <label>Date <input name="date" type="date" required></label>
+      <button type="submit">Add expense</button>
+    </form>
+    <section class="filters" aria-label="Date range filter">
+      <label>From <input id="start-date" type="date"></label>
+      <label>Through <input id="end-date" type="date"></label>
+      <button id="export-csv" type="button">Export CSV</button>
+    </section>
+    <p id="message" role="alert" aria-live="polite"></p>
+    <table>
+      <thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead>
+      <tbody id="expenses"></tbody>
+    </table>
+    <p>Total: <output id="total">0.00</output></p>
+  </body>
+</html>
