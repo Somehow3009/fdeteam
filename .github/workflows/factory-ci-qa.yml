@@ -61,5 +61,5 @@ jobs:
     steps:
       - name: Summarize CI result
         env:
-          RESULT: ${{ needs.mini-expense-manager.result }} / ${{ needs.playwright.result }} / ${{ needs.security.result }}
+          RESULT: ${{ needs['mini-expense-manager'].result }} / ${{ needs.playwright.result }} / ${{ needs.security.result }}
         run: echo "Factory CI jobs (app / Playwright / security): $RESULT"
