@@ -1,0 +1,10 @@
+{
+  "name": "ai-software-factory",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "factory:self-test": "node factory/scripts/self-test.mjs",
+    "factory:dispatch": "node factory/orchestrator/cli.mjs"
+  }
+}

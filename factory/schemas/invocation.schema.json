@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Factory invocation",
+  "type": "object",
+  "required": ["taskId", "role", "provider", "profile", "prompt", "maxInputTokens", "maxOutputTokens"],
+  "properties": {
+    "taskId": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,100}$" },
+    "role": { "type": "string", "minLength": 1 },
+    "provider": { "enum": ["codex", "gemini", "claude", "ollama"] },
+    "profile": { "type": "string", "minLength": 1 },
+    "prompt": { "type": "string", "minLength": 1 },
+    "workingDirectory": { "type": "string" },
+    "maxInputTokens": { "type": "integer", "minimum": 1 },
+    "maxOutputTokens": { "type": "integer", "minimum": 1 },
+    "timeoutMs": { "type": "integer", "minimum": 1000, "maximum": 3600000 },
+    "approval": { "type": "object" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,65 @@
+name: Factory CI and QA
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  mini-expense-manager:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/mini-expense-manager
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
+      - run: npm run lint
+  playwright:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+        working-directory: examples/mini-expense-manager
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test --reporter=html
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-and-traces
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/default
+  summary:
+    if: always()
+    needs: [mini-expense-manager, playwright, security]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Summarize CI result
+        env:
+          RESULT: ${{ needs.mini-expense-manager.result }} / ${{ needs.playwright.result }} / ${{ needs.security.result }}
+        run: echo "Factory CI jobs (app / Playwright / security): $RESULT"

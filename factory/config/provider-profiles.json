@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "defaultProfile": null,
+  "providers": {
+    "codex": { "enabled": false, "executable": "codex", "profiles": {} },
+    "gemini": { "enabled": false, "executable": "gemini", "profiles": {} },
+    "claude": { "enabled": false, "executable": "claude", "profiles": {} },
+    "ollama": { "enabled": false, "executable": "ollama", "profiles": {} }
+  },
+  "tokenBudgets": { "defaultInputTokens": 0, "defaultOutputTokens": 0 },
+  "promptCache": { "enabled": false, "directory": ".factory-cache/prompts" }
+}

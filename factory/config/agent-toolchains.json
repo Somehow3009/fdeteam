@@ -1,0 +1,8 @@
+{
+  "BA": ["mmdc", "redocly", "ajv"],
+  "Architect": ["prisma", "structurizr"],
+  "Dev Swarm": ["biome", "eslint", "vitest"],
+  "QA": ["playwright"],
+  "Security": ["semgrep", "gitleaks"],
+  "DevOps": ["gh", "git"]
+}
